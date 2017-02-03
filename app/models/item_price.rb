@@ -30,7 +30,7 @@ class ItemPrice < ActiveRecord::Base
     # -----------------------------
     # when new item price created, previous item price's end date set to start date of new price change
     before_create :set_end_date_to_start_date
-    before_destroy :is_never_destroyable
+    before_destroy :is_never_destroyable?
     
     # Methods
     # -----------------------------
@@ -45,7 +45,7 @@ class ItemPrice < ActiveRecord::Base
     # -----------------------------
     private
     def start_date_cannot_be_in_future
-        self.start_date > Date.today
+        self.start_date <= Date.today
     end
 
     def end_date_valid

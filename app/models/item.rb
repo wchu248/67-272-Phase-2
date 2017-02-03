@@ -72,5 +72,4 @@ class Item < ActiveRecord::Base
     validates_numericality_of :reorder_level, only_integer: true, greater_than_or_equal_to: 0
     validates_presence_of :inventory_level
     validates_numericality_of :inventory_level, only_integer: true, greater_than_or_equal_to: 0
-
 end
