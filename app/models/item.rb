@@ -1,6 +1,10 @@
 class Item < ActiveRecord::Base
     
     # Relationships
+    # -----------------------------
+    has_many :item_prices
+    belongs_to :item_price
+    belongs_to :purchase
 
     # Scopes
     # -----------------------------
@@ -16,18 +20,61 @@ class Item < ActiveRecord::Base
     scope :for_category, ->(category) { where('category = ?', category) }
     # gets all the items that match a particular color
     scope :for_color, ->(color) { where('color LIKE ?', "#{color}%") }
+    # checks if a date is 
 
     # Methods
     # -----------------------------
     # gets the current price of the item; nil if price has not been set
     def current_price
+        # get an array of all the store's item prices
+        possible_item_prices = Item_price.all.map{|p| p.id}
+        unless possible_item_prices.include?(self.id)
+            return nil
+        end
+        # get an array of prices for the item (self)
+        all_prices = possible_item_prices.find_by_id(self.id)
+        @curr_price = all_prices.find(|i| i.end_date == NULL)
+        return @curr_price.price
     end
 
-    def price_on_date
+    def price_on_date(date)
+        # checks that the parameter is of Date type
+        if (value.is_a?(Date))
+            # get an array of the item's prices
+            possible_item_prices = Item_price.all.map{|p| p.id}.find_by_id(self.id)
+            possible_item_prices.each do |x|
+                unless x.end_date == NULL 
+                    return x.price if date.between(x.start_date, x.end_date)
+                end
+            end
+            return nil
+        end
+        else
+            errors.add(:item_price, "is not a date value")
+        end
     end
 
-    def reorder
+date = params[:date]
+record = Campaign.where('start_date < ? AND end_date > ?', date, date)  
+
+
+    def reorder?
+        return true if self.reorder_level >= self.inventory_level
+        false
     end
 
     # Validations
+    # -----------------------------
+    # make sure required fields are present
+    validates_presence_of :name, :weight
+    # each name must be unique, regardless of case
+    validates :name, uniqueness: { case_sensitive: false }
+    # the category of the item must be one of 4 options
+    validates_inclusion_of :category, in: %w[pieces boards clocks supplies], message: "is not an option", allow_blank: true
+    # reorder_level and inventory_level must be zero or greater
+    validates_presence_of :reorder_level
+    validates_numericality_of :reorder_level, only_integer: true, greater_than_or_equal_to: 0
+    validates_presence_of :inventory_level
+    validates_numericality_of :inventory_level, only_integer: true, greater_than_or_equal_to: 0
+
 end

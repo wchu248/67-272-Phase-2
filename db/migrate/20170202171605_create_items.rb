@@ -8,7 +8,7 @@ class CreateItems < ActiveRecord::Migration
       t.float :weight
       t.integer :inventory_level
       t.integer :reorder_level
-      t.boolean :active
+      t.boolean :active, default: true
 
       t.timestamps null: false
     end
