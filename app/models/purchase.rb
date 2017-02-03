@@ -28,7 +28,9 @@ class Purchase < ActiveRecord::Base
     # Methods
     # -----------------------------
     def update_inventory
-        
+        purchase_item = Item.find(self.item_id)
+        curr_inv_level = purchase_item.inventory_level
+        item.update_attribute(:inventory_level, curr_inv_level + self.quantity) 
     end
 
     # Use private methods to execute the custom validations
