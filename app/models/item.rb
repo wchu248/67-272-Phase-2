@@ -3,7 +3,7 @@ class Item < ActiveRecord::Base
     # Relationships
     # -----------------------------
     has_many :item_prices
-    belongs_to :item_price
+    # belongs_to :item_price (don't know if I actually need this, check with other people)
     belongs_to :purchase
 
     # Scopes
@@ -53,10 +53,6 @@ class Item < ActiveRecord::Base
             errors.add(:item_price, "is not a date value")
         end
     end
-
-date = params[:date]
-record = Campaign.where('start_date < ? AND end_date > ?', date, date)  
-
 
     def reorder?
         return true if self.reorder_level >= self.inventory_level
