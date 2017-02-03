@@ -20,14 +20,13 @@ class Item < ActiveRecord::Base
     scope :for_category, ->(category) { where('category = ?', category) }
     # gets all the items that match a particular color
     scope :for_color, ->(color) { where('color LIKE ?', "#{color}%") }
-    # checks if a date is 
 
     # Methods
     # -----------------------------
     # gets the current price of the item; nil if price has not been set
     def current_price
         # get an array of all the store's item prices
-        possible_item_prices = Item_price.all.map{|p| p.id}
+        possible_item_prices = ItemPrice.for_item(self.id)
         unless possible_item_prices.include?(self.id)
             return nil
         end
@@ -41,7 +40,7 @@ class Item < ActiveRecord::Base
         # checks that the parameter is of Date type
         if (value.is_a?(Date))
             # get an array of the item's prices
-            possible_item_prices = Item_price.all.map{|p| p.id}.find_by_id(self.id)
+            possible_item_prices = ItemPrice.for_item(self.id).for_date(date)
             possible_item_prices.each do |x|
                 unless x.end_date == NULL 
                     return x.price if date.between(x.start_date, x.end_date)
@@ -55,14 +54,15 @@ class Item < ActiveRecord::Base
     end
 
     def reorder?
-        return true if self.reorder_level >= self.inventory_level
-        false
+        self.reorder_level >= self.inventory_level
     end
 
     # Validations
     # -----------------------------
     # make sure required fields are present
     validates_presence_of :name, :weight
+    # make sure the active field is a boolean
+    validates :active, inclusion: { in: [true, false] }
     # each name must be unique, regardless of case
     validates :name, uniqueness: { case_sensitive: false }
     # the category of the item must be one of 4 options
