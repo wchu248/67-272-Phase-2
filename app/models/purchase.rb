@@ -18,7 +18,7 @@ class Purchase < ActiveRecord::Base
     # make sure item_ids are for items which exist and are active in system
     validates_inclusion_of :item_id, in: Item.active
     # make sure date is set in present or past, not in future
-    validate :date_cannot_be_in_future
+    validates_date :date, on_or_before: lambda { Date.current }
 
     # Callbacks
     # -----------------------------
@@ -28,17 +28,9 @@ class Purchase < ActiveRecord::Base
     # Methods
     # -----------------------------
     def update_inventory
-        purchase_item = Item.find(self.item_id)
+        purchased_item = Item.find(self.item_id)
         curr_inv_level = purchase_item.inventory_level
         item.update_attribute(:inventory_level, curr_inv_level + self.quantity) 
-    end
-
-    # Use private methods to execute the custom validations
-    # -----------------------------
-    private
-    #returns true if the date is in the present or past, but not the future
-    def date_cannot_be_in_future
-        self.date <= Date.today
     end
 
 end
