@@ -25,28 +25,17 @@ class Item < ActiveRecord::Base
     # -----------------------------
     # gets the current price of the item; nil if price has not been set
     def current_price
-        # get an array of all the store's item prices
-        possible_item_prices = ItemPrice.for_item(self.id)
-        unless possible_item_prices.include?(self.id)
-            return nil
-        end
-        # get an array of prices for the item (self)
-        all_prices = possible_item_prices.find_by_id(self.id)
-        @curr_price = all_prices.find(|i| i.end_date == NULL)
-        return @curr_price.price
+        item_obj = self.item_prices.current.first
+        return nil if item_obj.nil?
+        item_obj.price
     end
 
     def price_on_date(date)
         # checks that the parameter is of Date type
         if (value.is_a?(Date))
-            # get an array of the item's prices
-            possible_item_prices = ItemPrice.for_item(self.id).for_date(date)
-            possible_item_prices.each do |x|
-                unless x.end_date == NULL 
-                    return x.price if date.between(x.start_date, x.end_date)
-                end
-            end
-            return nil
+            item_obj = self.item_prices.for_date(date).first
+            return nil if item_obj.nil?
+            item_obj.price
         end
         else
             errors.add(:item_price, "is not a date value")
