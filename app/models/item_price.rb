@@ -26,13 +26,12 @@ class ItemPrice < ActiveRecord::Base
     # make sure start_date is set in present or past, not in future
     validates_date :start_date, on_or_before: lambda { Date.current }
     # make sure end_date to be the same date or some date after start_date
-    validates_date  :end_date, on_or_after: :start_date, allow_blank: true
+    validates_date :end_date, on_or_after: :start_date, allow_blank: true
 
     # Callbacks
     # -----------------------------
     # when new item price created, previous item price's end date set to start date of new price change
     before_create :set_end_date_to_start_date
-    before_destroy :is_never_destroyable
     
     # Methods
     # -----------------------------
