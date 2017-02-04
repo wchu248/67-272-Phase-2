@@ -16,7 +16,7 @@ class Purchase < ActiveRecord::Base
     # Validations
     # -----------------------------
     # make sure item_ids are for items which exist and are active in system
-    validates_inclusion_of :item_id, in: Item.active
+    validates_inclusion_of :item_id, in: { Item.active }
     # make sure date is set in present or past, not in future
     validates_date :date, on_or_before: lambda { Date.current }
 

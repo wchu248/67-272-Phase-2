@@ -22,7 +22,7 @@ class ItemPrice < ActiveRecord::Base
     # make sure the price is a valid price
     validates_numericality_of :price, greater_than_or_equal_to: 0
     # make sure item_ids are for items which exist and are active in system
-    validates_inclusion_of :item_id, in: Item.active
+    validates_inclusion_of :item_id, in: lambda { Item.active }
     # make sure start_date is set in present or past, not in future
     validates_date :start_date, on_or_before: lambda { Date.current }
     # make sure end_date to be the same date or some date after start_date
