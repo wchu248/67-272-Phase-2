@@ -44,7 +44,6 @@ class Item < ActiveRecord::Base
             possible_item_prices.each do |x|
                 unless x.end_date == NULL 
                     return x.price if date.between(x.start_date, x.end_date)
-                    # don't forget to download more RAM
                 end
             end
             return nil
