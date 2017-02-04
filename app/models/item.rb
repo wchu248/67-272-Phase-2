@@ -25,6 +25,8 @@ class Item < ActiveRecord::Base
     # -----------------------------
     # make sure required fields are present
     validates_presence_of :name, :weight
+    # weight must be positive
+    validates_numericality_of :weight, greater_than: 0
     # make sure the active field is a boolean
     validates :active, inclusion: { in: [true, false] }
     # each name must be unique, regardless of case
