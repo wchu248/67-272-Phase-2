@@ -15,8 +15,12 @@ class Purchase < ActiveRecord::Base
 
     # Validations
     # -----------------------------
+    # make sure required fields are present
+    validates_presence_of :item_id, :quantity, :date
     # make sure item_ids are for items which exist and are active in system
     validates_inclusion_of :item_id, in: lambda { Item.active }
+    # make sure the quantity is an integer
+    validates_numericaly_of :quantity, only_integer: true
     # make sure date is set in present or past, not in future
     validates_date :date, on_or_before: lambda { Date.current }
 
