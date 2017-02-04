@@ -7,7 +7,7 @@ class ItemPrice < ActiveRecord::Base
     # Scopes
     # -----------------------------
     # gets only current prices
-    scope :current, -> { where(end_date: NULL) }
+    scope :current, -> { where(end_date: nil) }
     # returns the prices for a specified date
     scope :for_date, ->(date) { where('start_date <= ? AND (end_date > ? OR end_date IS NULL)', date, date) }
     # returns the prices for a specificed item
@@ -42,5 +42,5 @@ class ItemPrice < ActiveRecord::Base
             previous.update_attribute(:end_date, self.start_date) 
         end
     end
-    
+
 end
