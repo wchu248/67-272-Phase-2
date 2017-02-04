@@ -13,7 +13,7 @@ class ItemPrice < ActiveRecord::Base
     # returns the prices for a specificed item
     scope :for_item, ->(item_id) { where('item_id = ?', item_id) }
     # orders results chronologically with most recent price changes at top of the list
-    scope :chronological, lambda { order('start_date DESC') }
+    scope :chronological, -> { order('start_date DESC') }
 
     # Validations
     # -----------------------------

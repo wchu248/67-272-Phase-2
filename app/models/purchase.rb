@@ -7,7 +7,7 @@ class Purchase < ActiveRecord::Base
     # Scopes
     # -----------------------------
     # orders results chronologically with most recent purchases at top of the list
-    scope :chronological, lambda { order('date DESC') }
+    scope :chronological, -> { order('date DESC') }
     # returns all purchases that have negative quantities
     scope :loss, -> { where('quantity < 0') }
     # returns all purchases for a specified item
