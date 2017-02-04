@@ -54,7 +54,7 @@ class Item < ActiveRecord::Base
     validates :active, inclusion: { in: [true, false] }
     # each name must be unique, regardless of case
     validates :name, uniqueness: { case_sensitive: false }
-    # the category of the item must be one of 4 options
+    # the category of the item must be one of 4 available categories
     validates_inclusion_of :category, in: %w[pieces boards clocks supplies], message: "is not an option", allow_blank: true
     # reorder_level and inventory_level must be zero or greater
     validates_presence_of :reorder_level
