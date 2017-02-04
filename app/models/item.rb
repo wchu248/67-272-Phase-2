@@ -32,9 +32,7 @@ class Item < ActiveRecord::Base
     # the category of the item must be one of 4 available categories
     validates_inclusion_of :category, in: %w[pieces boards clocks supplies], message: "is not an option", allow_blank: true
     # reorder_level and inventory_level must be zero or greater
-    validates_presence_of :reorder_level
     validates_numericality_of :reorder_level, only_integer: true, greater_than_or_equal_to: 0
-    validates_presence_of :inventory_level
     validates_numericality_of :inventory_level, only_integer: true, greater_than_or_equal_to: 0
 
     # Methods
