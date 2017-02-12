@@ -32,7 +32,7 @@ class ItemPrice < ActiveRecord::Base
     # -----------------------------
     # when new item price created, previous item price's end date set to start date of new price change
     before_create :set_end_date_to_start_date
-    
+
     # Methods
     # -----------------------------
     def set_end_date_to_start_date 

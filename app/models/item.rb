@@ -19,12 +19,12 @@ class Item < ActiveRecord::Base
     # gets all the items in a particular category
     scope :for_category, ->(category) { where('category = ?', category) }
     # gets all the items that match a particular color
-    scope :for_color, ->(color) { where('color LIKE ?', "#{color}%") }
+    scope :for_color, ->(color) { where('color LIKE ?', '#{color}%') }
 
     # Validations
     # -----------------------------
     # make sure required fields are present
-    validates_presence_of :name, :weight
+    validates_presence_of :name, :weight, :reorder_level, :inventory_level
     # weight must be positive
     validates_numericality_of :weight, greater_than: 0
     # make sure the active field is a boolean
@@ -32,7 +32,7 @@ class Item < ActiveRecord::Base
     # each name must be unique, regardless of case
     validates :name, uniqueness: { case_sensitive: false }
     # the category of the item must be one of 4 available categories
-    validates_inclusion_of :category, in: %w[pieces boards clocks supplies], message: "is not an option", allow_blank: true
+    validates_inclusion_of :category, in: %w[pieces boards clocks supplies], message: 'is not an option', allow_blank: true
     # reorder_level and inventory_level must be zero or greater
     validates_numericality_of :reorder_level, only_integer: true, greater_than_or_equal_to: 0
     validates_numericality_of :inventory_level, only_integer: true, greater_than_or_equal_to: 0
@@ -54,7 +54,7 @@ class Item < ActiveRecord::Base
             item_obj.price
         end
         else
-            errors.add(:item_price, "is not a date value")
+            errors.add(:item_price, 'is not a date value')
         end
     end
 
