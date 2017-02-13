@@ -51,11 +51,9 @@ class Item < ActiveRecord::Base
         if (value.is_a?(Date))
             item_obj = self.item_prices.for_date(date).first
             return nil if item_obj.nil?
-            item_obj.price
+            return item_obj.price
         end
-        else
-            errors.add(:item_price, 'is not a date value')
-        end
+        errors.add(:item_price, 'is not a date value')
     end
 
     def reorder?

@@ -21,6 +21,7 @@ FactoryGirl.define do
   factory :purchase do
     quantity 2
     date 2.months.ago.to_date
+    association :item
   end
 
 end

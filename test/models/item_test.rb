@@ -2,12 +2,6 @@ require 'test_helper'
 
 class ItemTest < ActiveSupport::TestCase
 
-
-  test "should not save article without title" do
-    item = item.new
-    assert_not item.save
-  end
-
   # Relationship macros...
   should have_many(:item_prices)
   should have_many(:purchases)
