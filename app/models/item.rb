@@ -19,7 +19,7 @@ class Item < ActiveRecord::Base
     # gets all the items in a particular category
     scope :for_category, ->(category) { where('category = ?', category) }
     # gets all the items that match a particular color
-    scope :for_color, ->(color) { where('color LIKE ?', '%color%') }
+    scope :for_color, ->(color) { where('color LIKE ?', "#{color}%") }
 
     # Validations
     # -----------------------------
