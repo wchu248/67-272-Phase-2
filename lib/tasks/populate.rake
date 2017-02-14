@@ -17,7 +17,7 @@ namespace :db do
       item.name = Faker::Name.first_name
       item.description = Faker::Lorem.sentence
       item.category = %w[pieces boards clocks supplies]
-      item.color = %w[green purple red blue teal yellow green/white blue/black red/yellow purple/pink]
+      item.color = %w[green purple red blue teal yellow green/white blue/black red/yellow purple/pink red/white/blue]
       item.weight = Faker::Number.between(1, 20)
       item.inventory_level = Faker::Number.between(10, 100)
       item.reorder_level = Faker::Number.between(10, 30)
