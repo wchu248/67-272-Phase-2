@@ -12,23 +12,33 @@ namespace :db do
     # clear any old data in the db
     [Item, ItemPrice, Purchase].each(&:delete_all)
     
+    start_dates = [Date.today, 1.week.ago.to_date, 2.weeks.ago.to_date, 3.weeks.ago.to_date]
+    end_dates = [nil, Date.today, 1.week.ago.to_date, 2.weeks.ago.to_date]
+
     Item.populate 50 do |item|
         # get some fake data using the Faker gem
-        item.name = Faker::Name.first_name
-        item.description = Faker::Lorem.sentence
-        item.category = %w[pieces boards clocks supplies]
-        item.color = %w[green purple red blue teal yellow green/white blue/black red/yellow purple/pink]
-        item.weight = Faker::Number.between(1, 20)
-        item.inventory_level = Faker::Number.between(10, 100)
-        item.reorder_level = Faker::Number.between(10, 30)
-        item.active = [true, false]
+      item.name = Faker::Name.first_name
+      item.description = Faker::Lorem.sentence
+      item.category = %w[pieces boards clocks supplies]
+      item.color = %w[green purple red blue teal yellow green/white blue/black red/yellow purple/pink]
+      item.weight = Faker::Number.between(1, 20)
+      item.inventory_level = Faker::Number.between(10, 100)
+      item.reorder_level = Faker::Number.between(10, 30)
+      item.active = [true, false]
 
-        #ItemPrice.populate 1..5 do |item_price|
-         #   item_price.item_id = item.id
-          #  item_price.price = Faker::Number.decimal(2)
-           # item_price.start_date = Time.now
+        # add some item prices for each item
+        ItemPrice.populate 1..4 do |item_price|
+          item_price.item_id = item.id
+          item_price.price = Faker::Number.decimal(2)
+          item_price.start_date = start_dates.shift
+          item_price.end_date = end_dates.shift
+        end
 
-       # end
+        Purchase.populate 1..3 do |purchase|
+          price.item_id = item.id
+          price.quantity = Faker::Number.between(-2, 10)
+          price.date = Faker::Date.between(3.weeks.ago.to_date, Date.today)
+        end
 
     end
 
