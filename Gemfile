@@ -26,6 +26,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # complete validations of date, time, and datetime types in Rails
 gem 'validates_timeliness', '~> 4.0'
 
+# for table formatting in rails console
+gem 'herb'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
