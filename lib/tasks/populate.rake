@@ -24,13 +24,14 @@ namespace :db do
       item.active = [true, false]
 
         # add some item prices for each item
-        ItemPrice.populate 1..4 do |item_price|
+        ItemPrice.populate 4 do |item_price|
           start_dates = [Date.today, 1.week.ago.to_date, 2.weeks.ago.to_date, 3.weeks.ago.to_date]
           end_dates = [nil, Date.today, 1.week.ago.to_date, 2.weeks.ago.to_date]
           item_price.item_id = item.id
           item_price.price = Faker::Number.decimal(2)
-          item_price.start_date = start_dates.shift
-          item_price.end_date = end_dates.shift
+          date_index = rand(4)
+          item_price.start_date = start_dates[date_index]
+          item_price.end_date = end_dates[date_index]
         end
 
         Purchase.populate 1..3 do |purchase|
