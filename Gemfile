@@ -58,11 +58,15 @@ group :test do
   gem 'minitest'
   gem 'minitest-rails'
   gem 'minitest-reporters'
-  gem 'minitest-perf'
   gem 'factory_girl_rails'
   gem 'mocha'
+  gem 'cucumber-rails', require: false
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'launchy'
+  gem 'email_spec'
   gem 'nokogiri'
   gem 'simplecov'
+  gem 'simplecov-console'
   gem 'single_test'
 end
-

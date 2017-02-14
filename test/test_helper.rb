@@ -1,34 +1,23 @@
 require 'simplecov'
 SimpleCov.start 'rails'
-ENV["RAILS_ENV"] ||= "test"
+SimpleCov.formatter = SimpleCov::Formatter::Console
+ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'minitest/rails'
 require 'minitest/reporters'
-require 'minitest/perf'
 require 'minitest_extensions'
 
 class ActiveSupport::TestCase
-  ActiveRecord::Migration.check_pending!
-
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  # -- but we don't want them anyways, so comment them out...
-  # fixtures :all  
+  # fixtures :all
 
-  # Add more helper methods to be used by all tests here...
-  def deny(condition)
+  # Add the infamous deny method...
+  def deny(condition, msg="")
     # a simple transformation to increase readability IMO
-    assert !condition
+    assert !condition, msg
   end
 
   # Spruce up minitest results...
   Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new]
-  # reporter_options = { color: true, slow_count: 5 }
-  # Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(reporter_options)]
-
-
-
 end
-
-# Formatting test output a litte nicer
-# Turn.config.format = :outline

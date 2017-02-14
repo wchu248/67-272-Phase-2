@@ -1,0 +1,28 @@
+# Phase 2
+before_script:
+# Check for common problems
+  - echo -e "\e[33m+------------------------------+\n|   CHECKING FOR COMMON PROBLEMS   |\n+------------------------------+\e[0m"
+  - if [ -r ./Gemfile ] && [ -d ./app ] && [ -d ./db ] && [ -d ./config ]; then true; else echo -e "\e[31mYour rails app should not be in a subfolder! You may have made the git repo one folder up from where the rails app is (for example you did rails new phase_x and then git init and you forgot to cd into the phase_x folder first before git init. See a Head TA or Prof H *IMMEDIATELY* to fix this if you don't know how.\e[0m" && exit 1; fi
+  - if [ -d ./app/channels ]; then echo -e "\e[31mYou generated your rails app using rails 5 instead of rails 4.2.7 or 4.2.6. Look at your Gemfile to see which version of rails you are using. If you think this is a mistake, delete the app/channels folder (don't do this unless you are 100% certain you are using rails 4). See a Head TA or Prof H IMMEDIATELY if you do not know how to fix this!\e[0m" && exit 1; else true; fi
+  - if egrep -q "class\s+ItemPrice" ./app/models/*.rb; then true; else echo -e "\e[31mYou named your ItemPrice model something else, it must be named exactly 'ItemPrice' (case sensitive) for our tests to work. You will have to regenerate your model, don't just change the name. Fix this IMMEDIATELY, see a Head TA or Prof H if you need help.\e[0m" && exit 1; fi
+  - if egrep -q "class\s+Item[^Pp_]" ./app/models/*.rb; then true; else echo -e "\e[31mYou named your Item model something else, it must be named exactly 'Item' (case sensitive) for our tests to work. You will have to regenerate your model, don't just change the name. Fix this IMMEDIATELY, see a Head TA or Prof H if you need help.\e[0m" && exit 1; fi
+  - if egrep -q "class\s+Purchase" ./app/models/*.rb; then true; else echo -e "\e[31mYou named your Purchase model something else, it must be named exactly 'Purchase' (case sensitive) for our tests to work. You will have to regenerate your model, don't just change the name. Fix this IMMEDIATELY, see a Head TA or Prof H if you need help.\e[0m" && exit 1; fi
+  - if grep -q "SimpleCov.formatter = SimpleCov::Formatter::Console" ./test/test_helper.rb; then true; else echo -e "\e[31mYou MUST add 'simplecov' and 'simplecov-console' to your gemfile. ALSO you MUST add the simplecov lines at the top of your test_helper.rb file. They are:\nrequire 'simplecov'\nSimpleCov.start 'rails'\nSimpleCov.formatter = SimpleCov::Formatter::Console\nFix this IMMEDIATELY, see a Head TA or Prof H if you need help.\e[0m" && exit 1; fi
+# Print status
+  - echo -e "\e[33m+------------------------+\n|   SETTING UP PROJECT   |\n+------------------------+\e[0m"
+# Install gems the Docker image may not have
+  - bundle install --jobs $(nproc) "${FLAGS[@]}"
+# Set up the test database
+  - bundle exec rake db:migrate:reset RAILS_ENV=test
+# Remove unnecessary files (causes coverage report to check for non-model code too which will give wrong %)
+  - rm -rf ./app/controllers && rm -rf ./app/mailers && rm -rf ./app/helpers
+
+test:
+  script:
+# Run their unit tests, if our solution project exists (autograding) then continue otherwise return rake test's exit code
+  - echo -e "\e[33m+------------------------------+\n|   RUNNING THEIR UNIT TESTS   |\n+------------------------------+\e[0m"
+  - bundle exec rake test:units || [ -d /home/sol ]
+# If our solution project exists, print status
+  - if [ -d /home/sol ]; then echo -e "\e[33m+----------------------------+\n|   RUNNING OUR UNIT TESTS   |\n+----------------------------+\e[0m"; fi
+# If our solution project exists, copy our test suite over and run against their project
+  - if [ -d /home/sol ]; then rm -rf ./test && cp -r /home/sol/test ./ && bundle exec rake test:units; fi
