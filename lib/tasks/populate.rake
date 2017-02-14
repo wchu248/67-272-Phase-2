@@ -35,9 +35,9 @@ namespace :db do
         end
 
         Purchase.populate 1..3 do |purchase|
-          price.item_id = item.id
-          price.quantity = Faker::Number.between(-2, 10)
-          price.date = Faker::Date.between(3.weeks.ago.to_date, Date.today)
+          purchase.item_id = item.id
+          purchase.quantity = Faker::Number.between(-2, 10)
+          purchase.date = Faker::Date.between(3.weeks.ago.to_date, Date.today)
         end
 
     end
