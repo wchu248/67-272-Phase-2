@@ -95,7 +95,7 @@ class ItemTest < ActiveSupport::TestCase
     # test the scope 'inactive'
     should "shows that there is one inactive item" do
       assert_equal 1, Item.inactive.size
-      assert_equal ["Leather Bag"], Item.active.map{|o| o.name}.sort
+      assert_equal ["Leather Bag"], Item.inactive.map{|o| o.name}.sort
     end
         
     # test the scope 'alphabetical'
@@ -118,13 +118,13 @@ class ItemTest < ActiveSupport::TestCase
     # test the scope 'for_color' works
     should "properly handle color scope" do
       assert_equal 2, Item.for_color("silver").size
-      assert_equal ["Metal Chess Board", "Metal Chess Pieces"], Item.for_category("silver").map{|o| o.name}.sort
+      assert_equal ["Metal Chess Board", "Metal Chess Pieces"], Item.for_color("silver").map{|o| o.name}.sort
       assert_equal 2, Item.for_color("tan").size
-      assert_equal ["Leather Bag", "Wooden Chess Pieces"], Item.for_category("tan").map{|o| o.name}.sort
+      assert_equal ["Leather Bag", "Wooden Chess Pieces"], Item.for_color("tan").map{|o| o.name}.sort
       assert_equal 2, Item.for_color("beige").size
-      assert_equal ["Leather Bag", "Wooden Chess Pieces"], Item.for_category("beige").map{|o| o.name}.sort
+      assert_equal ["Leather Bag", "Wooden Chess Pieces"], Item.for_color("beige").map{|o| o.name}.sort
       assert_equal 1, Item.for_color("black").size
-      assert_equal ["Metal Chess Pieces"], Item.for_category("black").map{|o| o.name}.sort
+      assert_equal ["Metal Chess Pieces"], Item.for_color("black").map{|o| o.name}.sort
     end
     
     # test the method 'current_price' works
