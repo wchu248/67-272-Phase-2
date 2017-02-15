@@ -43,7 +43,7 @@ class ItemPrice < ActiveRecord::Base
         end
     end
 
-     # Use private methods to execute the custom validations
+    # Use private methods to execute the custom validations
 	# -----------------------------
 	private
 	def start_date_cannot_be_in_future
