@@ -48,7 +48,7 @@ class Item < ActiveRecord::Base
 
     def price_on_date(date)
         # checks that the parameter is of Date type
-        if (value.is_a?(Date))
+        if (date.is_a?(Date))
             item_obj = self.item_prices.for_date(date).first
             return nil if item_obj.nil?
             return item_obj.price

@@ -57,9 +57,9 @@ class ItemTest < ActiveSupport::TestCase
       @metalBoard = FactoryGirl.create(:item, name: "Metal Chess Board", category: "boards", color: "silver")
       @leatherBag = FactoryGirl.create(:item, name: "Leather Bag", category: "supplies", inventory_level: 20, active: false)
       @metalPieces = FactoryGirl.create(:item, name: "Metal Chess Pieces", color: "silver/black")
-      @woodPiecePrice1 = FactoryGirl.create(:item_price, item: @woodPiece)
-      @woodPiecePrice2 = FactoryGirl.create(:item_price, item: @woodPiece, price: 14.99, start_date: 1.month.ago.to_date, end_date: Date.today)
-      @woodPiecePrice3 = FactoryGirl.create(:item_price, item: @woodPiece, price: 13.99, start_date: 2.monts.ago.to_date, end_date: 1.month.ago.to_date)
+      @woodPiecePrice1 = FactoryGirl.create(:item_price, item: @woodPiece, price: 13.99, start_date: 2.months.ago.to_date)
+      @woodPiecePrice2 = FactoryGirl.create(:item_price, item: @woodPiece, price: 14.99, start_date: 1.month.ago.to_date)
+      @woodPiecePrice3 = FactoryGirl.create(:item_price, item: @woodPiece)
     end
     
     # and provide a teardown method as well
@@ -138,7 +138,7 @@ class ItemTest < ActiveSupport::TestCase
       assert_equal 15.99, @woodPiece.price_on_date(Date.today)
       assert_equal 14.99, @woodPiece.price_on_date(2.weeks.ago.to_date)
       assert_equal 13.99, @woodPiece.price_on_date(6.weeks.ago.to_date)
-      assert_equal nil, @woodPiece.price_on_date(6.months.ago.to_date)
+      assert_nil @woodPiece.price_on_date(6.months.ago.to_date)
     end
 
     # test the method 'reorder?' works

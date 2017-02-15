@@ -22,11 +22,11 @@ class ItemPrice < ActiveRecord::Base
     # make sure the price is a valid price
     validates_numericality_of :price, greater_than_or_equal_to: 0
     # make sure item_ids are for items which exist and are active in system
-    validates_inclusion_of :item_id, in: Item.active
+    validates_inclusion_of :item_id, in: Item.active.map {|i| i.id} 
     # make sure start_date is set in present or past, not in future
-    validates_date :start_date, on_or_before: Date.current
+    validate :start_date_cannot_be_in_future
     # make sure end_date to be the same date or some date after start_date
-    validates_date :end_date, on_or_after: :start_date, allow_blank: true
+    validate :end_date_valid
 
     # Callbacks
     # -----------------------------
@@ -36,10 +36,26 @@ class ItemPrice < ActiveRecord::Base
     # Methods
     # -----------------------------
     def set_end_date_to_start_date 
-        previous = ItemPrice.current.for_item(self.item_id)
+        previous = ItemPrice.current.for_item(self.item_id).first
         unless previous.nil?
             previous.update_attribute(:end_date, self.start_date) 
+            previous.save
         end
     end
+
+     # Use private methods to execute the custom validations
+	# -----------------------------
+	private
+	def start_date_cannot_be_in_future
+        unless self.start_date.nil? || self.nil?
+	        self.start_date <= Date.today
+        end
+	end
+	
+	def end_date_valid
+        unless self.start_date.nil? || self.nil? || self.end_date.nil?
+	        self.start_date <= self.end_date 
+        end
+	end
 
 end
