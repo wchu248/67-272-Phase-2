@@ -169,6 +169,16 @@
         0,
         null,
         null,
+        null,
+        null,
+        1,
+        1,
+        0,
+        0,
+        null,
+        null,
+        null,
+        null,
         null
       ],
       "/Users/winstonchu/Desktop/Sophomore S-17/67-272/project_phase2/phase2/app/controllers/application_controller.rb": [
@@ -179,6 +189,6 @@
         0
       ]
     },
-    "timestamp": 1487193928
+    "timestamp": 1487194929
   }
 }

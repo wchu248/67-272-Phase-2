@@ -45,6 +45,4 @@ class Purchase < ActiveRecord::Base
 	        self.date <= Date.today
         end
 	end
-	
-
 end
