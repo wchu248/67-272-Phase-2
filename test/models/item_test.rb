@@ -64,9 +64,9 @@ class ItemTest < ActiveSupport::TestCase
     
     # and provide a teardown method as well
     teardown do
-      #@woodPiecePrice3.destroy
-      #@woodPiecePrice2.destroy
-      #@woodPiecePrice1.destroy
+      @woodPiecePrice3.destroy
+      @woodPiecePrice2.destroy
+      @woodPiecePrice1.destroy
       @metalPieces.destroy
       @leatherBag.destroy
       @metalBoard.destroy
