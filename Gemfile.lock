@@ -104,7 +104,6 @@ GEM
     git-version-bump (0.15.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    herb (0.0.1)
     hirb (0.7.3)
     htmlentities (4.3.4)
     i18n (0.8.0)
@@ -252,7 +251,6 @@ DEPENDENCIES
   email_spec
   factory_girl_rails
   faker
-  herb
   hirb
   jbuilder (~> 2.0)
   jquery-rails
