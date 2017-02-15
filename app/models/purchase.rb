@@ -22,7 +22,7 @@ class Purchase < ActiveRecord::Base
     # make sure the quantity is an integer
     validates_numericality_of :quantity, only_integer: true
     # make sure date is set in present or past, not in future
-    validate :date_cannot_be_in_future
+    validates_date :date, on_or_before: lambda { Date.current }
 
     # Callbacks
     # -----------------------------
@@ -34,15 +34,6 @@ class Purchase < ActiveRecord::Base
     def update_inventory
         purchased_item = Item.find(self.item_id)
         curr_inv_level = purchase_item.inventory_level
-        purchased_item.update_attribute(:inventory_level, curr_inv_level + self.quantity) 
+        item.update_attribute(:inventory_level, curr_inv_level + self.quantity) 
     end
-
-    # Use private methods to execute the custom validations
-	# -----------------------------
-	private
-	def date_cannot_be_in_future
-        unless self.date.nil? || self.nil?
-	        self.date <= Date.today
-        end
-	end
 end
