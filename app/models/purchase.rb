@@ -34,6 +34,6 @@ class Purchase < ActiveRecord::Base
     def update_inventory
         purchased_item = Item.find(self.item_id)
         curr_inv_level = purchase_item.inventory_level
-        item.update_attribute(:inventory_level, curr_inv_level + self.quantity) 
+        item.update_attribute(:inventory_level, curr_inv_level - self.quantity) 
     end
 end

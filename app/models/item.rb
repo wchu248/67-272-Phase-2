@@ -27,8 +27,6 @@ class Item < ActiveRecord::Base
     validates_presence_of :name, :weight, :reorder_level, :inventory_level
     # weight must be positive
     validates_numericality_of :weight, greater_than: 0
-    # make sure the active field is a boolean
-    validates :active, inclusion: { in: [true, false] }
     # each name must be unique, regardless of case
     validates :name, uniqueness: { case_sensitive: false }
     # the category of the item must be one of 4 available categories
