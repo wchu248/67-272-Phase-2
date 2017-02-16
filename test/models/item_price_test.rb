@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ItemPriceTest < ActiveSupport::TestCase
-
+  
   # Relationship macros...
   should belong_to(:item)
 
@@ -118,6 +118,6 @@ class ItemPriceTest < ActiveSupport::TestCase
       assert_equal Date.today, @woodPiecePrice2.end_date
       assert_nil @woodPiecePrice3.end_date
     end
-    
+
   end
 end

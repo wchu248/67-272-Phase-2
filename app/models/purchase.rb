@@ -16,13 +16,13 @@ class Purchase < ActiveRecord::Base
     # Validations
     # -----------------------------
     # make sure required fields are present
-    validates_presence_of :item_id, :quantity, :date
+    validates_presence_of :item_id, :quantity, :date #done
     # make sure item_ids are for items which exist and are active in system
-    validates_inclusion_of :item_id, in: Item.active.map {|i| i.id} 
+    validates_inclusion_of :item_id, in: Item.active.map {|i| i.id} #done
     # make sure the quantity is an integer
-    validates_numericality_of :quantity, only_integer: true
+    validates_numericality_of :quantity, only_integer: true #done, go to OH and ask
     # make sure date is set in present or past, not in future
-    validates_date :date, on_or_before: lambda { Date.current }
+    validates_date :date, on_or_before: -> { Date.current } #done
 
     # Callbacks
     # -----------------------------
@@ -33,7 +33,7 @@ class Purchase < ActiveRecord::Base
     # -----------------------------
     def update_inventory
         purchased_item = Item.find(self.item_id)
-        curr_inv_level = purchase_item.inventory_level
+        curr_inv_level = purchased_item.inventory_level
         item.update_attribute(:inventory_level, curr_inv_level - self.quantity) 
     end
 end
