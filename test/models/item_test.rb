@@ -54,27 +54,18 @@ class ItemTest < ActiveSupport::TestCase
 
   # ---------------------------------
   # Testing other scopes/methods with a context
-  context "Creating three items" do
+  context "With a proper context," do
     # create the objects I want with factories
+    
     setup do 
-      @woodPiece = FactoryGirl.create(:item, inventory_level: 10)
-      @metalBoard = FactoryGirl.create(:item, name: "Metal Chess Board", category: "boards", color: "silver")
-      @leatherBag = FactoryGirl.create(:item, name: "Leather Bag", category: "supplies", inventory_level: 20, active: false)
-      @metalPieces = FactoryGirl.create(:item, name: "Metal Chess Pieces", color: "silver/black")
-      @woodPiecePrice1 = FactoryGirl.create(:item_price, item: @woodPiece, price: 13.99, start_date: 2.months.ago.to_date)
-      @woodPiecePrice2 = FactoryGirl.create(:item_price, item: @woodPiece, price: 14.99, start_date: 1.month.ago.to_date)
-      @woodPiecePrice3 = FactoryGirl.create(:item_price, item: @woodPiece)
+      # call the create_context method here
+      create_context
     end
     
     # and provide a teardown method as well
     teardown do
-      @woodPiecePrice3.destroy
-      @woodPiecePrice2.destroy
-      @woodPiecePrice1.destroy
-      @metalPieces.destroy
-      @leatherBag.destroy
-      @metalBoard.destroy
-      @woodPiece.destroy
+      # call the remove_context method here
+      remove_context
     end
   
     # now run the tests:
@@ -163,6 +154,6 @@ class ItemTest < ActiveSupport::TestCase
       assert testItem1.valid?
       deny testItem2.valid?
     end
-    
+
   end
 end

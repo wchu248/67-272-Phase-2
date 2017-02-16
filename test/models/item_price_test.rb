@@ -38,29 +38,18 @@ class ItemPriceTest < ActiveSupport::TestCase
 
   # ---------------------------------
   # Testing other scopes/methods with a context
-  context "Creating three items" do
+  context "With a proper context," do
     # create the objects I want with factories
+
     setup do 
-      @woodPiece = FactoryGirl.create(:item, inventory_level: 10)
-      @metalBoard = FactoryGirl.create(:item, name: "Metal Chess Board", category: "boards", color: "silver")
-      @woodPiecePrice1 = FactoryGirl.create(:item_price, item: @woodPiece, price: 13.99, start_date: 2.months.ago.to_date)
-      @woodPiecePrice2 = FactoryGirl.create(:item_price, item: @woodPiece, price: 14.99, start_date: 1.month.ago.to_date)
-      @woodPiecePrice3 = FactoryGirl.create(:item_price, item: @woodPiece)
-      @metalBoardPrice1 = FactoryGirl.create(:item_price, item: @metalBoard, price: 99.99, start_date: 3.weeks.ago.to_date)
-      @metalBoardPrice2 = FactoryGirl.create(:item_price, item: @metalBoard, price: 49.99, start_date: 2.days.ago.to_date)
-      @metalBoardPrice3 = FactoryGirl.create(:item_price, item: @metalBoard, price: 0.99)
+      # call the create_context method here
+      create_context
     end
     
     # and provide a teardown method as well
     teardown do
-      @woodPiecePrice3.destroy
-      @woodPiecePrice2.destroy
-      @woodPiecePrice1.destroy
-      @metalBoardPrice3.destroy
-      @metalBoardPrice2.destroy
-      @metalBoardPrice1.destroy
-      @metalBoard.destroy
-      @woodPiece.destroy
+      # call the remove_context method here
+      remove_context
     end
   
     # now run the tests:
