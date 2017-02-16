@@ -43,5 +43,6 @@ class ItemPrice < ActiveRecord::Base
             previous.update_attribute(:end_date, self.start_date) 
             previous.save
         end
+        
     end
 end

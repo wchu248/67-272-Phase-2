@@ -109,6 +109,15 @@ class ItemPriceTest < ActiveSupport::TestCase
     # how does the order work when two prices are changed at the same time?
     end
 
+    # test the callback for setting previous end_date to the new start_date
+    should "properly set previous end_date to new start_date" do
+      @woodPiecePrice1.reload
+      @woodPiecePrice2.reload
+      @woodPiecePrice3.reload
+      assert_equal 1.month.ago.to_date, @woodPiecePrice1.end_date
+      assert_equal Date.today, @woodPiecePrice2.end_date
+      assert_nil @woodPiecePrice3.end_date
+    end
+    
   end
-
 end

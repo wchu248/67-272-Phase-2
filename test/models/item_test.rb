@@ -156,13 +156,13 @@ class ItemTest < ActiveSupport::TestCase
       assert_equal false, @metalPieces.reorder?
     end
 
+    # test the uniqueness of names
     should "not allow the duplicate names in the database, regardless of case" do
       testItem1 = FactoryGirl.create(:item, name: 'Glass Chess Pieces')
       testItem2 = FactoryGirl.build(:item, name: 'glass Chess Pieces')
       assert testItem1.valid?
       deny testItem2.valid?
     end
-
+    
   end
 end
-
