@@ -7,6 +7,7 @@ require 'rails/test_help'
 require 'minitest/rails'
 require 'minitest/reporters'
 require 'minitest_extensions'
+require 'factory_girl_rails'
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
@@ -55,5 +56,5 @@ class ActiveSupport::TestCase
 
   # Spruce up minitest results...
   Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new]
-  
+
 end
