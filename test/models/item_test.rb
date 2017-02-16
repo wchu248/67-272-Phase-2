@@ -148,6 +148,24 @@ class ItemTest < ActiveSupport::TestCase
       assert_equal false, @metalBoard.reorder?
       assert_equal false, @metalPieces.reorder?
     end
+
+    should "not allow 'bags' as a category" do
+      testBag = FactoryGirl.build(:item, category: "bags")
+      deny testBag.valid?
+    end
+
+    should "not allow reorder and inventory levels below zero" do
+      testItem = FactoryGirl.build(:item, reorder_level: -1, inventory_level: -1)
+      deny testItem.valid?
+    end
+
+    should "not allow the duplicate names in the database, regardless of case" do
+      testItem1 = FactoryGirl.build(:item, name: 'Glass Chess Pieces')
+      testItem2 = FactoryGirl.build(:item, name: 'glass chess pieces')
+      assert testItem1.valid?
+      assert testItem2.valid?
+    end
+
   end
 end
 
