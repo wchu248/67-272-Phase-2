@@ -96,7 +96,17 @@ class ItemPriceTest < ActiveSupport::TestCase
 
     # test the scope 'for_item'
     should "properly handle 'for_item' scope" do
-      
+      assert_equal 3, ItemPrice.for_item(@woodPiece.id).size
+      assert_equal [13.99, 14.99, 15.99], ItemPrice.for_item(@woodPiece.id).map{|i| i.price}.sort
+      assert_equal 3, ItemPrice.for_item(@metalBoard.id).size
+      assert_equal [0.99, 49.99, 99.99], ItemPrice.for_item(@metalBoard.id).map{|i| i.price}.sort
+    end
+
+    # test the scope 'chronological'
+    should "properly handle 'chronological' scope" do
+      assert 6, ItemPrice.chronological.size
+      assert_equal [15.99, 0.99, 49.99, 99.99, 14.99, 13.99], ItemPrice.chronological.map{|i| i.price}
+    # how does the order work when two prices are changed at the same time?
     end
 
   end
