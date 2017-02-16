@@ -37,10 +37,14 @@ class ActiveSupport::TestCase
     @metalBoardPrice3 = FactoryGirl.create(:item_price, item: @metalBoard, price: 0.99)
 
     # Create a purchse for an item
-    @woodPiecePurchase1 = FactoryGirl.create(:purchase, item: @woodPiece, quantity: 10)
+    @woodPiecePurchase1 = FactoryGirl.create(:purchase, item: @woodPiece, quantity: 5)
+    @woodPiecePurchase2 = FactoryGirl.create(:purchase, item: @woodPiece, date: 1.year.ago.to_date)
+    @woodPiecePurchase3 = FactoryGirl.create(:purchase, item: @woodPiece, quantity: -5, date: 1.day.ago.to_date)
   end
   
   def remove_context
+    @woodPiecePurchase3.destroy
+    @woodPiecePurchase2.destroy
     @woodPiecePurchase1.destroy
     @metalBoardPrice3.destroy
     @metalBoardPrice2.destroy

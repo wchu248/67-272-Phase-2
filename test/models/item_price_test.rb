@@ -95,7 +95,6 @@ class ItemPriceTest < ActiveSupport::TestCase
     should "properly handle 'chronological' scope" do
       assert 6, ItemPrice.chronological.size
       assert_equal [15.99, 0.99, 49.99, 99.99, 14.99, 13.99], ItemPrice.chronological.map{|i| i.price}
-    # how does the order work when two prices are changed at the same time?
     end
 
     # test the callback for setting previous end_date to the new start_date
