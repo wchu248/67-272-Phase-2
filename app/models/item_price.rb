@@ -47,17 +47,17 @@ class ItemPrice < ActiveRecord::Base
 
     # Use private methods to execute the custom validations
 	# -----------------------------
-	private
-	def start_date_cannot_be_in_future
-        unless self.start_date.nil? || self.nil?
-	        self.start_date <= Date.today
-        end
-	end
+	#private
+	#def start_date_cannot_be_in_future
+    #    unless self.start_date.nil? || self.nil?
+	#        self.start_date <= Date.today
+    #    end
+	#end
 	
-	def end_date_valid
-        unless self.start_date.nil? || self.nil? || self.end_date.nil?
-	        self.start_date <= self.end_date 
-        end
-	end
+	#def end_date_valid
+    #    unless self.start_date.nil? || self.nil? || self.end_date.nil?
+	#        self.start_date <= self.end_date 
+    #    end
+	#end
 
 end
