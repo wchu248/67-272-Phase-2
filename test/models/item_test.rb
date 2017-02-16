@@ -24,6 +24,7 @@ class ItemTest < ActiveSupport::TestCase
 
   should_not allow_value('bags').for(:category)
   should_not allow_value('clock').for(:category)
+  should_not allow_value(0).for(:category)
 
   # Validating weight...
   should allow_value(7).for(:weight)
@@ -31,6 +32,7 @@ class ItemTest < ActiveSupport::TestCase
 
   should_not allow_value(0).for(:weight)
   should_not allow_value(-4.20).for(:weight)
+  should_not allow_value("hello").for(:weight)
 
   # Validating inventory_level...
   should allow_value(0).for(:inventory_level)
@@ -39,6 +41,7 @@ class ItemTest < ActiveSupport::TestCase
 
   should_not allow_value(-1).for(:inventory_level)
   should_not allow_value(10.5).for(:inventory_level)
+  should_not allow_value("not allowed").for(:inventory_level)
 
   # Validating reorder_level...
   should allow_value(0).for(:reorder_level)
@@ -47,6 +50,7 @@ class ItemTest < ActiveSupport::TestCase
 
   should_not allow_value(-1).for(:reorder_level)
   should_not allow_value(10.5).for(:reorder_level)
+  should_not allow_value("not allowed").for(:reorder_level)
 
   # ---------------------------------
   # Testing other scopes/methods with a context
@@ -149,21 +153,11 @@ class ItemTest < ActiveSupport::TestCase
       assert_equal false, @metalPieces.reorder?
     end
 
-    should "not allow 'bags' as a category" do
-      testBag = FactoryGirl.build(:item, category: "bags")
-      deny testBag.valid?
-    end
-
-    should "not allow reorder and inventory levels below zero" do
-      testItem = FactoryGirl.build(:item, reorder_level: -1, inventory_level: -1)
-      deny testItem.valid?
-    end
-
     should "not allow the duplicate names in the database, regardless of case" do
-      testItem1 = FactoryGirl.build(:item, name: 'Glass Chess Pieces')
-      testItem2 = FactoryGirl.build(:item, name: 'glass chess pieces')
+      testItem1 = FactoryGirl.create(:item, name: 'Glass Chess Pieces')
+      testItem2 = FactoryGirl.build(:item, name: 'glass Chess Pieces')
       assert testItem1.valid?
-      assert testItem2.valid?
+      deny testItem2.valid?
     end
 
   end
