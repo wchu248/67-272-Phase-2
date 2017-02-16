@@ -84,6 +84,9 @@ class ItemTest < ActiveSupport::TestCase
       assert_equal "Metal Chess Board", @metalBoard.name
       assert_equal "Leather Bag", @leatherBag.name
       assert_equal "Metal Chess Pieces", @metalPieces.name
+      assert_equal 13.99, @woodPiecePrice1.price
+      assert_equal 14.99, @woodPiecePrice2.price
+      assert_equal 15.99, @woodPiecePrice3.price
       assert @woodPiece.active
       assert @metalBoard.active
       assert @metalPieces.active

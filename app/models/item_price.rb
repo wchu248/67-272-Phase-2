@@ -28,7 +28,7 @@ class ItemPrice < ActiveRecord::Base
     validates_date :start_date, on_or_before: -> { Date.current }
     # make sure end_date to be the same date or some date after start_date
     #validate :end_date_valid
-    validates_date :end_date, on_or_after: :start_date
+    validates_date :end_date, on_or_after: :start_date, allow_nil: true
 
     # Callbacks
     # -----------------------------
