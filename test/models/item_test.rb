@@ -56,7 +56,7 @@ class ItemTest < ActiveSupport::TestCase
   # Testing other scopes/methods with a context
   context "With a proper context," do
     # create the objects I want with factories
-    
+
     setup do 
       # call the create_context method here
       create_context
@@ -153,6 +153,8 @@ class ItemTest < ActiveSupport::TestCase
       testItem2 = FactoryGirl.build(:item, name: 'glass Chess Pieces')
       assert testItem1.valid?
       deny testItem2.valid?
+      testItem1.destroy
+      testItem2.destroy
     end
 
   end
