@@ -79,9 +79,24 @@ class ItemPriceTest < ActiveSupport::TestCase
     end
 
     # test the scope 'current'
-    should "shows that there all the current prices are returned" do
+    should "show that there all the current prices are returned" do
       assert_equal 2, ItemPrice.current.size
-      assert_equal [0.99, 15.99], ItemPrice.current.map{|o| o.price}.sort
+      assert_equal [0.99, 15.99], ItemPrice.current.map{|i| i.price}.sort
+    end
+
+    # test the scope 'for_date'
+    should "properly handle 'for_date' scope" do
+      assert_equal 2, ItemPrice.for_date(2.weeks.ago.to_date).size
+      assert_equal [14.99, 99.99], ItemPrice.for_date(2.weeks.ago.to_date).map{|i| i.price}.sort
+      assert_equal 1, ItemPrice.for_date(7.weeks.ago.to_date).size
+      assert_equal [13.99], ItemPrice.for_date(7.weeks.ago.to_date).map{|i| i.price}.sort
+      assert_equal 2, ItemPrice.for_date(Date.today).size
+      assert_equal [0.99, 15.99], ItemPrice.for_date(Date.today).map{|i| i.price}.sort
+    end
+
+    # test the scope 'for_item'
+    should "properly handle 'for_item' scope" do
+      
     end
 
   end

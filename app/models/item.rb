@@ -53,5 +53,4 @@ class Item < ActiveRecord::Base
     def reorder?
         self.reorder_level >= self.inventory_level
     end
-
 end

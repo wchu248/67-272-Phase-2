@@ -94,44 +94,44 @@ class ItemTest < ActiveSupport::TestCase
     end
 
     # test the scope 'active'
-    should "shows that there are three active items" do
+    should "show that there are three active items" do
       assert_equal 3, Item.active.size
-      assert_equal ["Metal Chess Board", "Metal Chess Pieces", "Wooden Chess Pieces"], Item.active.map{|o| o.name}.sort
+      assert_equal ["Metal Chess Board", "Metal Chess Pieces", "Wooden Chess Pieces"], Item.active.map{|i| i.name}.sort
     end
 
     # test the scope 'inactive'
-    should "shows that there is one inactive item" do
+    should "show that there is one inactive item" do
       assert_equal 1, Item.inactive.size
-      assert_equal ["Leather Bag"], Item.inactive.map{|o| o.name}.sort
+      assert_equal ["Leather Bag"], Item.inactive.map{|i| i.name}.sort
     end
         
     # test the scope 'alphabetical'
-    should "shows that there are four items in in alphabetical order" do
-      assert_equal ["Leather Bag", "Metal Chess Board", "Metal Chess Pieces", "Wooden Chess Pieces"], Item.alphabetical.map{|o| o.name}
+    should "show that there are four items in in alphabetical order" do
+      assert_equal ["Leather Bag", "Metal Chess Board", "Metal Chess Pieces", "Wooden Chess Pieces"], Item.alphabetical.map{|i| i.name}
     end
     
     # test the scope 'need_reorder'
-    should "shows that there are two items that need reordering" do
+    should "show that there are two items that need reordering" do
       assert_equal 2, Item.need_reorder.size
-      assert_equal ["Leather Bag", "Wooden Chess Pieces"], Item.need_reorder.map{|o| o.name}.sort
+      assert_equal ["Leather Bag", "Wooden Chess Pieces"], Item.need_reorder.map{|i| i.name}.sort
     end
 
     # test the scope 'for_category' works
-    should "shows that the 'pieces' category contains the correct items" do
+    should "show that the 'pieces' category contains the correct items" do
       assert_equal 2, Item.for_category("pieces").size
-      assert_equal ["Metal Chess Pieces", "Wooden Chess Pieces"], Item.for_category("pieces").map{|o| o.name}.sort
+      assert_equal ["Metal Chess Pieces", "Wooden Chess Pieces"], Item.for_category("pieces").map{|i| i.name}.sort
     end
     
     # test the scope 'for_color' works
     should "properly handle color scope" do
       assert_equal 2, Item.for_color("silver").size
-      assert_equal ["Metal Chess Board", "Metal Chess Pieces"], Item.for_color("silver").map{|o| o.name}.sort
+      assert_equal ["Metal Chess Board", "Metal Chess Pieces"], Item.for_color("silver").map{|i| i.name}.sort
       assert_equal 2, Item.for_color("tan").size
-      assert_equal ["Leather Bag", "Wooden Chess Pieces"], Item.for_color("tan").map{|o| o.name}.sort
+      assert_equal ["Leather Bag", "Wooden Chess Pieces"], Item.for_color("tan").map{|i| i.name}.sort
       assert_equal 2, Item.for_color("beige").size
-      assert_equal ["Leather Bag", "Wooden Chess Pieces"], Item.for_color("beige").map{|o| o.name}.sort
+      assert_equal ["Leather Bag", "Wooden Chess Pieces"], Item.for_color("beige").map{|i| i.name}.sort
       assert_equal 1, Item.for_color("black").size
-      assert_equal ["Metal Chess Pieces"], Item.for_color("black").map{|o| o.name}.sort
+      assert_equal ["Metal Chess Pieces"], Item.for_color("black").map{|i| i.name}.sort
     end
     
     # test the method 'current_price' works
@@ -149,7 +149,7 @@ class ItemTest < ActiveSupport::TestCase
     end
 
     # test the method 'reorder?' works
-    should "shows that there are two items that need to be reordered" do
+    should "show that there are two items that need to be reordered" do
       assert_equal true, @woodPiece.reorder?
       assert_equal true, @leatherBag.reorder?
       assert_equal false, @metalBoard.reorder?
