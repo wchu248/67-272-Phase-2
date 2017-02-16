@@ -24,9 +24,11 @@ class ItemPrice < ActiveRecord::Base
     # make sure item_ids are for items which exist and are active in system
     validates_inclusion_of :item_id, in: Item.active.map {|i| i.id} 
     # make sure start_date is set in present or past, not in future
-    validate :start_date_cannot_be_in_future
+    #validate :start_date_cannot_be_in_future
+    validates_date :start_date, on_or_before: -> { Date.current }
     # make sure end_date to be the same date or some date after start_date
-    validate :end_date_valid
+    #validate :end_date_valid
+    validates_date :end_date, on_or_after: :start_date
 
     # Callbacks
     # -----------------------------

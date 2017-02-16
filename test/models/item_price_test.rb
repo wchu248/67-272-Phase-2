@@ -16,9 +16,8 @@ class ItemPriceTest < ActiveSupport::TestCase
   # Validating price...
   should allow_value(7).for(:price)
   should allow_value(5.12).for(:price)
-  should allow_value(0.01).for(:price)
+  should allow_value(0).for(:price)
 
-  should_not allow_value(0).for(:price)
   should_not allow_value(-1).for(:price)
   should_not allow_value(-3.10).for(:price)
   should_not allow_value("hello").for(:price)
@@ -26,9 +25,9 @@ class ItemPriceTest < ActiveSupport::TestCase
   # Validating start_date...
   should allow_value(Date.today).for(:start_date)
   should allow_value(3.weeks.ago.to_date).for(:start_date)
-  should allow_value(0.01).for(:start_date)
 
   should_not allow_value(1.day.from_now.to_date).for(:start_date)
+  should_not allow_value(-0.01).for(:start_date)
   should_not allow_value(5).for(:start_date)
   should_not allow_value("hello").for(:start_date)
 
