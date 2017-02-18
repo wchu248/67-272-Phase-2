@@ -33,7 +33,7 @@ class ItemPriceTest < ActiveSupport::TestCase
 
   # Validating end_date...
   should allow_value(nil).for(:end_date)
-  
+
   should_not allow_value(3.days.from_now.to_date).for(:end_date)
   should_not allow_value(4).for(:end_date)
   should_not allow_value(4.01).for(:end_date)
@@ -113,11 +113,14 @@ class ItemPriceTest < ActiveSupport::TestCase
     # test that an end_date cannot be set before a start_date
     should "not allow an end_date to be set before a start_date" do
       @wackItem = FactoryGirl.create(:item, name: "hello")
-      @itemPrice1 = FactoryGirl.build(:item_price, item: @wackItem, end_date: 3.weeks.ago.to_date)
+      @itemPrice1 = FactoryGirl.build(:item_price, item: @wackItem, start_date: 2.weeks.ago.to_date, end_date: 3.weeks.ago.to_date)
+      @itemPrice2 = FactoryGirl.build(:item_price, item: @wackItem, start_date: 2.weeks.ago.to_date, end_date: 1.weeks.ago.to_date)
       assert @wackItem.valid?
       deny @itemPrice1.valid?
+      assert @itemPrice2.valid?
       @wackItem.destroy
       @itemPrice1.destroy
+      @itemPrice2.destroy
     end
 
     # test the custom validation 'exists_and_active_in_system'
