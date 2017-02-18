@@ -29,8 +29,10 @@ class ItemPriceTest < ActiveSupport::TestCase
   should_not allow_value(-0.01).for(:start_date)
   should_not allow_value(5).for(:start_date)
   should_not allow_value("hello").for(:start_date)
+  should_not allow_value(nil).for(:start_date)
 
   # Validating end_date...
+  should allow_value(nil).for(:end_date)
   should_not allow_value(4).for(:end_date)
   should_not allow_value(4.01).for(:end_date)
   should_not allow_value("hello").for(:end_date)
