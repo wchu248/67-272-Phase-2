@@ -41,7 +41,7 @@ class Purchase < ActiveRecord::Base
     def exists_and_active_in_system
         all_item_ids = Item.active.all.map{|o| o.id}
         unless all_item_ids.include?(self.item_id)
-            errors.add(:item, "is not an active owner in PATS")
+            errors.add(:item, "is not an active item in the system")
             return false
         end
         return true
