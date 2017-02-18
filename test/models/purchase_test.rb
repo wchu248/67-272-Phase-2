@@ -85,9 +85,11 @@ class PurchaseTest < ActiveSupport::TestCase
       assert_equal 12, @woodPiece.inventory_level
       @testItemY = FactoryGirl.create(:item, name: "derp", inventory_level: 100)
       @testPurchaseY = FactoryGirl.build(:purchase, item: @testItemY)
-      assert 102, @testItemY.inventory_level
+      @testPurchaseZ = FactoryGirl.build(:purchase, item: @testItemY, quantity: -10)
+      assert 92, @testItemY.inventory_level
       @testItemY.destroy
       @testPurchaseY.destroy
+      @testPurchaseZ.destroy
     end
 
     # test the custom validation 'exists_and_active_in_system'
