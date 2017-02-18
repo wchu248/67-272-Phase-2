@@ -9,7 +9,6 @@ class PurchaseTest < ActiveSupport::TestCase
   should validate_presence_of(:item_id)
   should validate_presence_of(:quantity)
   should validate_presence_of(:date)
-  should validate_inclusion_of(:item_id).in_array(Item.active.map {|i| i.id})
 
   # Validating quantity...
   should allow_value(1).for(:quantity)
@@ -77,6 +76,7 @@ class PurchaseTest < ActiveSupport::TestCase
       assert_equal [5, 2, -5], Purchase.for_item(@woodPiece).map{|i| i.quantity}
       @testItemY = FactoryGirl.create(:item, name: "Should have no purchases")
       assert_equal 0, Purchase.for_item(@testItemY).size
+      @testItemY.destroy
     end
 
     # test that inventory will update properly when a purchase is made
@@ -87,6 +87,14 @@ class PurchaseTest < ActiveSupport::TestCase
       assert 102, @testItemY.inventory_level
       @testItemY.destroy
       @testPurchaseY.destroy
+    end
+
+    # test the custom validation 'exists_and_active_in_system'
+    should "identify a non-active item as inactive" do
+      # try to build an purchase for an inactive item
+      @fakePurchase = FactoryGirl.build(:purchase, item: @leatherBag)
+      deny @fakePurchase.valid?
+      @fakePurchase.destroy
     end
 
   end

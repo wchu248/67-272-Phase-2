@@ -11,7 +11,6 @@ class ItemPriceTest < ActiveSupport::TestCase
   should validate_presence_of(:start_date)
 
   should validate_numericality_of(:price).is_greater_than_or_equal_to(0)
-  should validate_inclusion_of(:item_id).in_array(Item.active.map {|i| i.id})
 
   # Validating price...
   should allow_value(7).for(:price)
@@ -105,6 +104,24 @@ class ItemPriceTest < ActiveSupport::TestCase
       assert_equal 1.month.ago.to_date, @woodPiecePrice1.end_date
       assert_equal Date.today, @woodPiecePrice2.end_date
       assert_nil @woodPiecePrice3.end_date
+    end
+
+    # test that an end_date cannot be set before a start_date
+    should "not allow an end_date to be set before a start_date" do
+      @wackItem = FactoryGirl.create(:item, name: "hello")
+      @itemPrice1 = FactoryGirl.build(:item_price, item: @wackItem, end_date: 3.weeks.ago.to_date)
+      assert @wackItem.valid?
+      deny @itemPrice1.valid?
+      @wackItem.destroy
+      @itemPrice1.destroy
+    end
+
+    # test the custom validation 'exists_and_active_in_system'
+    should "identify a non-active item as inactive" do
+      # try to build an item_price for an inactive item
+      @fakePrice = FactoryGirl.build(:item_price, item: @leatherBag)
+      deny @fakePrice.valid?
+      @fakePrice.destroy
     end
 
   end

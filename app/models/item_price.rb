@@ -21,14 +21,12 @@ class ItemPrice < ActiveRecord::Base
     validates_presence_of :item_id, :price, :start_date
     # make sure the price is a valid price
     validates_numericality_of :price, greater_than_or_equal_to: 0
-    # make sure item_ids are for items which exist and are active in system
-    validates_inclusion_of :item_id, in: Item.active.map {|i| i.id} 
     # make sure start_date is set in present or past, not in future
-    #validate :start_date_cannot_be_in_future
     validates_date :start_date, on_or_before: -> { Date.current }
     # make sure end_date to be the same date or some date after start_date
-    #validate :end_date_valid
     validates_date :end_date, on_or_after: :start_date, allow_nil: true
+    # make sure item_ids are for items which exist and are active in system
+    validate :exists_and_active_in_system
 
     # Callbacks
     # -----------------------------
@@ -42,7 +40,17 @@ class ItemPrice < ActiveRecord::Base
         unless previous.nil?
             previous.update_attribute(:end_date, self.start_date) 
             previous.save
-        end
-        
+        end 
     end
+
+    private
+    def exists_and_active_in_system
+        all_item_ids = Item.active.all.map{|o| o.id}
+        unless all_item_ids.include?(self.item_id)
+            errors.add(:item, "is not an active owner in PATS")
+            return false
+        end
+        return true
+    end
+
 end
