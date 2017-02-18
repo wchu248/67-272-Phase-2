@@ -37,7 +37,6 @@ class Item < ActiveRecord::Base
 
     # Methods
     # -----------------------------
-    # gets the current price of the item; nil if price has not been set
     def current_price
         item_obj = self.item_prices.current.first
         return nil if item_obj.nil?

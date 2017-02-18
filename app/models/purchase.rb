@@ -46,4 +46,5 @@ class Purchase < ActiveRecord::Base
         end
         return true
     end
+    
 end
