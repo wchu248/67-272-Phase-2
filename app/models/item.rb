@@ -3,7 +3,6 @@ class Item < ActiveRecord::Base
     # Relationships
     # -----------------------------
     has_many :item_prices, dependent: :destroy
-    # belongs_to :item_price (don't know if I actually need this, check with other people)
     has_many :purchases
 
     # Scopes

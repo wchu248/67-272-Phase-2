@@ -73,10 +73,10 @@ class PurchaseTest < ActiveSupport::TestCase
 
     # test the scope 'for_item'
     should "properly handle 'for_item' scope" do
-      assert_equal 3, Purchase.for_item(@woodPiece).size
-      assert_equal [5, 2, -5], Purchase.for_item(@woodPiece).map{|i| i.quantity}
+      assert_equal 3, Purchase.for_item(@woodPiece.id).size
+      assert_equal [5, 2, -5], Purchase.for_item(@woodPiece.id).map{|i| i.quantity}
       @testItemY = FactoryGirl.create(:item, name: "Should have no purchases")
-      assert_equal 0, Purchase.for_item(@testItemY).size
+      assert_equal 0, Purchase.for_item(@testItemY.id).size
       @testItemY.destroy
     end
 

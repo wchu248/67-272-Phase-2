@@ -131,5 +131,11 @@ class ItemPriceTest < ActiveSupport::TestCase
       @fakePrice.destroy
     end
 
+    should "identify a active item as active" do
+      @fakePrice = FactoryGirl.build(:item_price, item: @metalPieces)
+      assert @fakePrice.valid?
+      @fakePrice.destroy
+    end
+
   end
 end
