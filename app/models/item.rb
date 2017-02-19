@@ -45,7 +45,7 @@ class Item < ActiveRecord::Base
     def price_on_date(date)
         item_obj = self.item_prices.for_date(date).first
         return nil if item_obj.nil?
-        return item_obj.price
+        item_obj.price
     end
 
     def reorder?

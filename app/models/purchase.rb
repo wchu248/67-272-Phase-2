@@ -39,8 +39,8 @@ class Purchase < ActiveRecord::Base
 
     private
     def exists_and_active_in_system
-        all_item_ids = Item.active.all.map{|o| o.id}
-        unless all_item_ids.include?(self.item_id)
+        all_active_item_ids = Item.active.all.map{|o| o.id}
+        unless all_active_item_ids.include?(self.item_id)
             errors.add(:item, "is not an active item in the system")
             return false
         end
