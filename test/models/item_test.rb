@@ -26,6 +26,7 @@ class ItemTest < ActiveSupport::TestCase
   should_not allow_value('clock').for(:category)
   should_not allow_value(' ').for(:category)
   should_not allow_value(0).for(:category)
+  should_not allow_value(1.day.ago.to_date).for(:category)
   should_not allow_value(nil).for(:category)
 
   # Validating weight...
@@ -45,6 +46,7 @@ class ItemTest < ActiveSupport::TestCase
   should_not allow_value(-1).for(:inventory_level)
   should_not allow_value(10.5).for(:inventory_level)
   should_not allow_value("not allowed").for(:inventory_level)
+  should_not allow_value(1.day.ago.to_date).for(:inventory_level)
   should_not allow_value(nil).for(:inventory_level)
 
   # Validating reorder_level...
@@ -55,6 +57,7 @@ class ItemTest < ActiveSupport::TestCase
   should_not allow_value(-1).for(:reorder_level)
   should_not allow_value(10.5).for(:reorder_level)
   should_not allow_value("not allowed").for(:reorder_level)
+  should_not allow_value(1.day.ago.to_date).for(:reorder_level)
   should_not allow_value(nil).for(:reorder_level)
 
   # ---------------------------------

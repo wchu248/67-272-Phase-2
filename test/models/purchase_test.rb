@@ -21,6 +21,7 @@ class PurchaseTest < ActiveSupport::TestCase
   should_not allow_value(10.00).for(:quantity)
   should_not allow_value(-3.10).for(:quantity)
   should_not allow_value("hello").for(:quantity)
+  should_not allow_value(1.day.ago.to_date).for(:quantity)
   should_not allow_value(nil).for(:quantity)
 
   # Validating date...
